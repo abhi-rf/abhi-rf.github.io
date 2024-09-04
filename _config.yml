@@ -56,27 +56,27 @@ plugins:
 
 
 author:
-  name   : "Dominik Muhle"
+  name   : "Abhishek Saroha"
   avatar : "/assets/images/prisma.jpeg"
   bio    : >- 
     PhD student @ <a href="https://cvg.cit.tum.de">TUM CVG</a><br>
-    dominik.muhle@tum.de
+    abhishek.saroha@tum.de
   links:
     - label: "CVG Page"
       icon: "fa-solid fa-fw fa-flask"
-      url: "https://cvg.cit.tum.de/members/muhled"
+      url: "https://cvg.cit.tum.de/members/saroha"
     - label: "LinkedIn"
       icon: "fa-brands fa-fw fa-linkedin"
-      url: "https://www.linkedin.com/in/dominik-muhle-a6b487149/"
+      url: "https://www.linkedin.com/in/abhishek-saroha/"
     - label: "Google Scholar"
       icon: "fa-brands fa-fw fa-google-scholar"
-      url: "https://scholar.google.com/citations?user=IyFJMlQAAAAJ&hl=en"
+      url: "https://scholar.google.com/citations?user=nSuHckYAAAAJ&hl=en"
     - label: "X (Twitter)"
       icon: "fa-brands fa-fw fa-x-twitter"
-      url: "https://twitter.com/dominikmuhle"
+      url: "https://twitter.com/abhi_saroha19"
     - label: "GitHub"
       icon: "fa-brands fa-fw fa-github"
-      url: "https://github.com/dominikmuhle"
+      url: "https://github.com/abhi-rf"
 
 # ==================================================== COLLECTIONS ====================================================
 collections:
