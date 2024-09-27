@@ -54,3 +54,5 @@ citation: '@article{saroha2024gaussian,
 # acknowledgements: 'This work was supported by the ERC Advanced Grant SIMULACRON, by the Munich Center for Machine Learning, and by the German Federal Ministry of Transport and Digital Infrastructure (BMDV) under grant 19F2251F for the ADAM project.'
 
 ---
+
+{% include_relative content.html %}
