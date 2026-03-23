@@ -5,23 +5,198 @@ classes: wide
 
 {{ content }}
 
+<style>
+    /* Global typography overrides */
+    .page__content p {
+        font-size: 0.92em;
+        line-height: 1.7;
+        color: #444;
+    }
+
+    .page__content h2 {
+        font-size: 1.25em;
+        font-weight: 600;
+        margin-top: 1.2em;
+        margin-bottom: 0.6em;
+        color: #222;
+        border-bottom: 1px solid #eee;
+        padding-bottom: 6px;
+    }
+
+    /* Research interests pills */
+    .research-interests {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin: 4px 0 12px 0;
+    }
+    .research-interests span {
+        background: #f0f4f8;
+        border: 1px solid #d0d7de;
+        border-radius: 16px;
+        padding: 3px 13px;
+        font-size: 0.82em;
+        color: #444;
+        white-space: nowrap;
+    }
+
+    /* Featured publications */
+    .featured-pub {
+        display: flex;
+        gap: 18px;
+        margin-bottom: 22px;
+        align-items: flex-start;
+    }
+    .featured-pub img {
+        width: 200px;
+        min-width: 200px;
+        border-radius: 5px;
+        border: 1px solid #e8e8e8;
+    }
+    .featured-pub-info h4 {
+        margin: 0 0 3px 0;
+        font-size: 0.92em;
+        font-weight: 600;
+        line-height: 1.4;
+    }
+    .featured-pub-info h4 a {
+        color: #222;
+        text-decoration: none;
+    }
+    .featured-pub-info h4 a:hover {
+        color: #0969da;
+    }
+    .featured-pub-info .venue {
+        font-size: 0.8em;
+        color: #777;
+        margin-bottom: 2px;
+        font-weight: 500;
+    }
+    .featured-pub-info .authors {
+        font-size: 0.8em;
+        color: #666;
+        margin-bottom: 5px;
+    }
+    .featured-pub-info .desc {
+        font-size: 0.82em;
+        color: #555;
+        line-height: 1.5;
+    }
+    .featured-pub-info .pub-links {
+        font-size: 0.78em;
+        margin-top: 5px;
+    }
+    .featured-pub-info .pub-links a {
+        margin-right: 10px;
+        color: #0969da;
+        text-decoration: none;
+        font-weight: 500;
+    }
+    .featured-pub-info .pub-links a:hover {
+        text-decoration: underline;
+    }
+
+    /* News section */
+    .news-item {
+        font-size: 0.85em;
+        line-height: 1.6;
+        margin-bottom: 6px;
+        color: #555;
+    }
+    .news-item b {
+        color: #333;
+        font-weight: 600;
+    }
+    .news-item hr {
+        border: none;
+        border-top: 1px solid #f0f0f0;
+        margin: 8px 0;
+    }
+
+    /* Dividers */
+    .section-hr hr {
+        border: none;
+        border-top: 1px solid #eee;
+        margin: 16px 0;
+    }
+
+    @media (max-width: 600px) {
+        .featured-pub { flex-direction: column; }
+        .featured-pub img { width: 100%; min-width: unset; }
+    }
+</style>
+
 <p align="justify">
-    I am a PhD student at the <a href="https://cvg.cit.tum.de">Computer Vision Group</a> at <a href="https://www.tum.de">Technical University of Munich</a> (TUM) under the guidance of Prof. Cremers. This website collects my <a href="publications">research projects</a> in computer vision. Check out more awesome work from our <a href="https://cvg.cit.tum.de/publications">group</a>.
-    <br>
+    I am a PhD student at the <a href="https://cvg.cit.tum.de">Computer Vision Group</a> at <a href="https://www.tum.de">Technical University of Munich</a> (TUM), advised by <a href="https://vision.in.tum.de/members/cremers">Prof. Daniel Cremers</a>. My research focuses on generative models for 3D motion understanding from egocentric videos, with the goal of enabling embodied agents to perceive and reason about object dynamics in real-world environments. I work on trajectory generation, flow matching, and physics-aware inference for egocentric scene understanding.
 </p>
 
-<div class="hr">
-    <div class="container">
-        <hr>
+<p align="justify">
+    Previously, I worked on neural scene stylization using 3D Gaussian Splatting. I am broadly interested in problems at the intersection of generative modeling, 3D vision, and embodied perception.
+</p>
+
+<h2>Research Interests</h2>
+<div class="research-interests">
+    <span>Egocentric Vision</span>
+    <span>Generative Models</span>
+    <span>Flow Matching</span>
+    <span>3D Scene Understanding</span>
+    <span>Trajectory Generation</span>
+    <span>Embodied Perception</span>
+</div>
+
+<div class="section-hr"><hr></div>
+
+<h2>Selected Publications</h2>
+
+<div class="featured-pub">
+    <a href="/egoflow/"><img src="/publications/egoflow/assets/teaser.png" alt="EgoFlow teaser"></a>
+    <div class="featured-pub-info">
+        <h4><a href="/egoflow/">EgoFlow: Gradient-Guided Flow Matching for Egocentric 6DoF Object Motion Generation</a></h4>
+        <div class="venue">CVPR 2026</div>
+        <div class="authors"><b>Abhishek Saroha</b>, Huajian Zeng, Xingxing Zuo, Daniel Cremers, Xi Wang</div>
+        <div class="desc">A flow-matching framework with gradient-guided inference that generates physically plausible 6DoF object trajectories from egocentric videos, reducing collision rates by up to 79%.</div>
+        <div class="pub-links">
+            <a href="/egoflow/">Project Page</a>
+            <a href="#">Paper</a>
+        </div>
     </div>
 </div>
 
-<h2 class="title is-3">News</h2>
-<div class="content">
-    {% for news in site.data.news %}
-    <b>{{ news.date }}</b> <br> {{ news.description | markdownify | remove: '<p>' | remove: '</p>' }}
-    <div class="hr">
-        <hr>
+<div class="featured-pub">
+    <a href="https://huajian-zeng.github.io/projects/gmt/"><img src="/publications/gmt/assets/method.png" alt="GMT method"></a>
+    <div class="featured-pub-info">
+        <h4><a href="https://huajian-zeng.github.io/projects/gmt/">GMT: Goal-Conditioned Multimodal Transformer for 6-DOF Object Trajectory Synthesis in 3D Scenes</a></h4>
+        <div class="venue">3DV 2026</div>
+        <div class="authors">Huajian Zeng*, <b>Abhishek Saroha</b>*, Daniel Cremers, Xi Wang</div>
+        <div class="desc">A multimodal transformer that generates goal-directed 6-DOF object trajectories by jointly leveraging 3D geometry, point cloud context, and semantic cues.</div>
+        <div class="pub-links">
+            <a href="https://huajian-zeng.github.io/projects/gmt/">Project Page</a>
+            <a href="https://arxiv.org/abs/2603.17993">Paper</a>
+            <a href="https://github.com/huajian-zeng/gmt">Code</a>
+        </div>
     </div>
-    {% endfor %}
 </div>
+
+<div class="featured-pub">
+    <a href="/publications/gss/"><img src="/publications/gss/assets/teaser.png" alt="GSS teaser"></a>
+    <div class="featured-pub-info">
+        <h4><a href="/publications/gss/">Gaussian Splatting in Style</a></h4>
+        <div class="venue">GCPR 2024</div>
+        <div class="authors"><b>Abhishek Saroha</b>, Mariia Gladkova, Cecilia Curreli, Dominik Muhle, Tarun Yenamandra, Daniel Cremers</div>
+        <div class="desc">First to employ Gaussian Splatting for scene stylization, extending neural style transfer to three spatial dimensions.</div>
+        <div class="pub-links">
+            <a href="/publications/gss/">Project Page</a>
+            <a href="https://arxiv.org/abs/2403.08498">Paper</a>
+        </div>
+    </div>
+</div>
+
+<div class="section-hr"><hr></div>
+
+<h2>News</h2>
+{% for news in site.data.news %}
+<div class="news-item">
+    <b>{{ news.date }}</b> &mdash; {{ news.description | markdownify | remove: '<p>' | remove: '</p>' }}
+    <hr>
+</div>
+{% endfor %}
