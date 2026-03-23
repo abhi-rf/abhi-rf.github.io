@@ -1,2 +1,8 @@
+- date: March 2026
+  description: 'Our paper [EgoFlow: Gradient-Guided Flow Matching for Egocentric 6DoF Object Motion Generation](/egoflow/) was accepted to **CVPR 2026**'
+
+- date: January 2026
+  description: 'Our paper [GMT: Goal-Conditioned Multimodal Transformer for 6-DOF Object Trajectory Synthesis in 3D Scenes](https://huajian-zeng.github.io/projects/gmt/) was accepted to **3DV 2026**'
+
 - date: August 2024
   description: 'Our paper [Gaussian Splatting in Style](https://arxiv.org/abs/2403.08498) was accepted to **GCPR 2024**'
