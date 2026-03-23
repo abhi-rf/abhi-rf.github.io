@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EgoFlow: Gradient-Guided Flow Matching for Egocentric 6DoF Object Motion Generation</title>
+  <meta name="description" content="EgoFlow: a flow-matching framework for physically plausible 6DoF object trajectory generation from egocentric videos. CVPR 2026.">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    body {
+      font-family: 'Noto Sans', sans-serif;
+    }
+
+    .hero-body { padding-bottom: 1rem; }
+
+    .publication-title {
+      font-family: 'Noto Sans', sans-serif;
+      font-weight: 700;
+    }
+
+    .publication-authors {
+      font-size: 1.1rem;
+    }
+
+    .publication-authors a {
+      color: #363636;
+      border-bottom: 1px dashed #999;
+    }
+    .publication-authors a:hover {
+      color: hsl(204, 86%, 53%);
+      border-bottom-color: hsl(204, 86%, 53%);
+    }
+
+    .author-block { display: inline-block; margin: 0 4px; }
+
+    .publication-venue {
+      color: #555;
+      font-size: 1.05rem;
+    }
+
+    .link-block a {
+      margin: 4px;
+    }
+
+    /* Teaser */
+    .teaser-image {
+      max-width: 85%;
+      margin: 0 auto;
+    }
+
+    .teaser-caption {
+      font-size: 0.92rem;
+      color: #666;
+      max-width: 800px;
+      margin: 12px auto 0;
+      line-height: 1.6;
+    }
+
+    /* Section styling */
+    .section-divider {
+      border: none;
+      border-top: 1px solid #eee;
+      margin: 0;
+    }
+
+    .section { padding: 2.5rem 1.5rem; }
+
+    .results-section { padding: 2rem 1.5rem; }
+
+    h2.title.is-3 {
+      font-family: 'Noto Sans', sans-serif;
+      font-weight: 700;
+      margin-bottom: 1rem !important;
+    }
+
+    .abstract-text {
+      font-size: 1rem;
+      line-height: 1.85;
+      text-align: justify;
+    }
+
+    /* Video grid */
+    .video-container {
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+
+    .video-container video {
+      display: block;
+      width: 100%;
+    }
+
+    .video-caption {
+      font-size: 0.88rem;
+      color: #666;
+      margin-top: 8px;
+      text-align: center;
+      line-height: 1.5;
+    }
+
+    /* Method figure */
+    .method-figure img {
+      border-radius: 6px;
+    }
+
+    .method-description {
+      font-size: 0.95rem;
+      line-height: 1.75;
+    }
+
+    /* Results images */
+    .results-figure {
+      border-radius: 6px;
+      border: 1px solid #eee;
+    }
+
+    .figure-caption {
+      font-size: 0.9rem;
+      color: #555;
+      margin-top: 10px;
+      line-height: 1.6;
+    }
+
+    /* Compact tables */
+    .results-table {
+      font-size: 0.9rem;
+      margin: 0 auto;
+    }
+
+    .results-table th {
+      font-weight: 600;
+      font-size: 0.85rem;
+      white-space: nowrap;
+      background: #fafafa;
+      border-bottom: 2px solid #dbdbdb;
+    }
+
+    .results-table td {
+      white-space: nowrap;
+    }
+
+    .results-table .best {
+      font-weight: 700;
+      color: hsl(204, 86%, 43%);
+    }
+
+    .results-table .ours-row {
+      background: #f0f7ff;
+    }
+
+    .table-title {
+      font-size: 0.95rem;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    /* BibTeX */
+    .bibtex-wrapper {
+      position: relative;
+    }
+
+    .bibtex-box {
+      background: #f5f5f5;
+      border-radius: 8px;
+      padding: 16px 20px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.82rem;
+      line-height: 1.65;
+      overflow-x: auto;
+      white-space: pre;
+      border: 1px solid #eee;
+    }
+
+    .copy-btn {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      background: white;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      padding: 3px 12px;
+      font-size: 0.75rem;
+      cursor: pointer;
+      color: #666;
+      transition: all 0.2s;
+    }
+    .copy-btn:hover {
+      border-color: hsl(204, 86%, 53%);
+      color: hsl(204, 86%, 53%);
+    }
+
+    /* Footer */
+    .footer {
+      padding: 2rem 1.5rem;
+    }
+    .footer .content p {
+      font-size: 0.85rem;
+      color: #999;
+    }
+    .footer a {
+      color: hsl(204, 86%, 53%);
+    }
+
+    /* Responsive video grid */
+    @media (max-width: 768px) {
+      .teaser-image { max-width: 100%; }
+      .publication-authors { font-size: 0.95rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Hero / Header -->
+<section class="hero is-light">
+  <div class="hero-body">
+    <div class="container is-max-desktop has-text-centered">
+
+      <p class="mb-3">
+        <span class="tag is-info is-medium"><b>CVPR 2026</b></span>
+      </p>
+
+      <h1 class="title is-2 publication-title">
+        EgoFlow: Gradient-Guided Flow Matching<br>for Egocentric 6DoF Object Motion Generation
+      </h1>
+
+      <div class="publication-authors mb-2">
+        <span class="author-block"><a href="https://cvg.cit.tum.de/members/saroha" target="_blank">Abhishek Saroha</a><sup>1,2</sup>,</span>
+        <span class="author-block"><a href="https://huajian-zeng.github.io/" target="_blank">Huajian Zeng</a><sup>3</sup>,</span>
+        <span class="author-block"><a href="https://xingxingzuo.github.io/" target="_blank">Xingxing Zuo</a><sup>3</sup>,</span>
+        <span class="author-block"><a href="https://vision.in.tum.de/members/cremers" target="_blank">Daniel Cremers</a><sup>1,2</sup>,</span>
+        <span class="author-block"><a href="https://xiwang1212.github.io/homepage/" target="_blank">Xi Wang</a><sup>1,2,4</sup></span>
+      </div>
+
+      <div class="publication-venue mb-4">
+        <sup>1</sup>TU M&uuml;nchen &ensp;
+        <sup>2</sup>MCML &ensp;
+        <sup>3</sup>MBZUAI &ensp;
+        <sup>4</sup>ETH Z&uuml;rich
+      </div>
+
+      <div class="link-block">
+        <a class="button is-dark is-rounded is-small" href="#">
+          <span class="icon"><i class="fas fa-file-pdf"></i></span>
+          <span>Paper</span>
+        </a>
+        <a class="button is-dark is-rounded is-small" href="#">
+          <span class="icon"><i class="ai ai-arxiv"></i></span>
+          <span>arXiv</span>
+        </a>
+        <a class="button is-dark is-rounded is-small" href="#">
+          <span class="icon"><i class="fab fa-github"></i></span>
+          <span>Code (Coming Soon)</span>
+        </a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- Teaser -->
+<section class="section" style="padding-top: 2rem; padding-bottom: 1.5rem;">
+  <div class="container is-max-desktop has-text-centered">
+    <div class="teaser-image">
+      <img src="static/images/teaser.png" alt="EgoFlow teaser figure showing trajectory generation across diverse environments.">
+    </div>
+    <p class="teaser-caption">
+      Given a textual command and the surrounding environment, <b>EgoFlow</b> generates physically valid 6DoF object trajectories that respect spatial constraints across diverse environments by learning from egocentric videos.
+    </p>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- Abstract -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3">Abstract</h2>
+    <p class="abstract-text">
+      Understanding and predicting object motion from egocentric video is fundamental to embodied perception and interaction. However, generating physically consistent 6DoF trajectories remains challenging due to occlusions, fast motion, and the lack of explicit physical reasoning in existing generative models. We present <b>EgoFlow</b>, a flow-matching framework that synthesizes realistic and physically plausible trajectories conditioned on multimodal egocentric observations. EgoFlow employs a hybrid Mamba&ndash;Transformer&ndash;Perceiver architecture to jointly model temporal dynamics, scene geometry, and semantic intent, while a gradient-guided inference process enforces differentiable physical constraints such as collision avoidance and motion smoothness. This combination yields coherent and controllable motion generation without post-hoc filtering or additional supervision. Experiments on real-world datasets HD-EPIC, EgoExo4D, and HOT3D show that EgoFlow outperforms diffusion-based and transformer baselines in accuracy, generalization, and physical realism, <b>reducing collision rates by up to 79%</b>, and strong generalization to unseen scenes.
+    </p>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- Method -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3">Method</h2>
+    <div class="method-figure has-text-centered mb-4">
+      <img src="static/images/method.png" alt="EgoFlow architecture overview" style="max-width: 100%;">
+    </div>
+    <p class="method-description">
+      EgoFlow formulates trajectory synthesis as a continuous transport process using <b>flow matching</b>, learning deterministic velocity fields that map noise to realistic 6DoF trajectories. Multimodal conditioning fuses scene point clouds (PointNet++), fixture layouts (self-attention over oriented bounding boxes), trajectory history, CLIP-encoded text/category embeddings, and goal pose into a unified representation.
+    </p>
+    <p class="method-description">
+      A <b>hybrid Mamba&ndash;Transformer&ndash;Perceiver architecture</b> processes this in three stages: bidirectional Mamba layers for efficient temporal encoding, Perceiver-style cross-attention for multimodal reasoning, and a final Mamba refinement stage. At inference, <b>gradient-guided sampling</b> refines the predicted velocity via differentiable physical costs&mdash;SDF-based collision avoidance, rotational consistency, and translational smoothness&mdash;enforcing physical plausibility without requiring constraint labels during training.
+    </p>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- Qualitative Videos -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3">Results</h2>
+    <p class="mb-5">We compare EgoFlow against baselines on HD-EPIC (realistic kitchens) and HOT3D (zero-shot cross-dataset). Our method generates smoother, more physically plausible trajectories while significantly reducing collisions.</p>
+
+    <!-- HD-EPIC Video -->
+    <h3 class="title is-5 mb-3">HD-EPIC &mdash; Qualitative Comparison</h3>
+    <div class="video-container">
+      <video autoplay loop muted playsinline>
+        <source src="static/videos/hdepic_qualitative.mp4" type="video/mp4">
+      </video>
+    </div>
+    <p class="video-caption">Comparison of EgoFlow against baselines on HD-EPIC kitchen sequences. Green: history, colored: predictions.</p>
+
+    <!-- HD-EPIC Qualitative Image -->
+    <div class="has-text-centered mt-5 mb-5">
+      <img src="static/images/hdepic_qualitative.png" alt="HD-EPIC qualitative comparison" class="results-figure" style="max-width: 100%;">
+      <p class="figure-caption"><b>HD-EPIC Qualitative Results.</b> EgoFlow generates plausible trajectories that take natural and smooth paths to the target pose, unlike baselines which often deviate or collide.</p>
+    </div>
+
+    <!-- HOT3D Qualitative Image -->
+    <h3 class="title is-5 mb-3 mt-5">HOT3D &mdash; Zero-Shot Generalization</h3>
+    <div class="has-text-centered mb-5">
+      <img src="static/images/hot3d_qualitative.png" alt="HOT3D qualitative comparison" class="results-figure" style="max-width: 100%;">
+      <p class="figure-caption"><b>HOT3D Zero-Shot Results.</b> Trained on Ego-Exo4D, tested on HOT3D without fine-tuning. EgoFlow produces geometrically coherent 6DoF trajectories in unseen environments.</p>
+    </div>
+
+    <!-- Diffusion vs Flow Matching -->
+    <h3 class="title is-5 mb-3 mt-5">Flow Matching vs. Diffusion</h3>
+    <div class="columns">
+      <div class="column is-8 is-offset-2">
+        <div class="video-container">
+          <video autoplay loop muted playsinline>
+            <source src="static/videos/diffusion_flow_qualitative.mp4" type="video/mp4">
+          </video>
+        </div>
+        <p class="video-caption">Flow matching produces smoother, more coherent trajectories compared to diffusion-based generation.</p>
+      </div>
+    </div>
+
+    <!-- Compact Comparison Tables -->
+    <h3 class="title is-5 mb-3 mt-6">Quantitative Comparison</h3>
+    <div class="columns is-multiline">
+      <div class="column is-7">
+        <p class="table-title">HD-EPIC</p>
+        <table class="table is-hoverable is-fullwidth results-table">
+          <thead>
+            <tr>
+              <th>Model</th>
+              <th>ADE &darr;</th>
+              <th>FDE &darr;</th>
+              <th>Fr&eacute;chet &darr;</th>
+              <th>Geodesic &darr;</th>
+              <th>Coll. &darr;</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>GIMO</td><td>0.285</td><td>0.509</td><td>0.210</td><td class="best">0.725</td><td>23.5%</td></tr>
+            <tr><td>CHOIS</td><td>0.471</td><td>0.755</td><td>0.262</td><td>1.255</td><td>18.7%</td></tr>
+            <tr><td>Egoscaler</td><td>1.330</td><td>1.494</td><td>0.315</td><td>1.614</td><td>35.8%</td></tr>
+            <tr class="ours-row"><td><b>EgoFlow</b></td><td class="best">0.279</td><td class="best">0.102</td><td class="best">0.197</td><td>1.141</td><td class="best">2.5%</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="column is-5">
+        <p class="table-title">HOT3D (Zero-Shot)</p>
+        <table class="table is-hoverable is-fullwidth results-table">
+          <thead>
+            <tr>
+              <th>Model</th>
+              <th>ADE &darr;</th>
+              <th>FDE &darr;</th>
+              <th>GD &darr;</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>GIMO</td><td>0.299</td><td>0.436</td><td>2.06</td></tr>
+            <tr><td>CHOIS</td><td>0.513</td><td>0.571</td><td>2.46</td></tr>
+            <tr><td>Egoscaler</td><td>0.351</td><td>0.540</td><td class="best">0.856</td></tr>
+            <tr class="ours-row"><td><b>EgoFlow</b></td><td class="best">0.265</td><td class="best">0.027</td><td>1.49</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- Data Processing -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3">HD-EPIC Data Processing</h2>
+    <p class="mb-4">HD-EPIC provides only sparse object annotations. We reconstruct continuous 6DoF trajectories by tracking the manipulating hand as a rigid-body proxy using Project Aria's MPS. Below we show the reconstructed 3D object positions projected back onto egocentric frames for verification.</p>
+    <div class="columns">
+      <div class="column is-6">
+        <div class="video-container">
+          <video autoplay loop muted playsinline>
+            <source src="static/videos/data_processing_pan.mp4" type="video/mp4">
+          </video>
+        </div>
+        <p class="video-caption">Pan trajectory reconstruction</p>
+      </div>
+      <div class="column is-6">
+        <div class="video-container">
+          <video autoplay loop muted playsinline>
+            <source src="static/videos/data_processing_chopping_board.mp4" type="video/mp4">
+          </video>
+        </div>
+        <p class="video-caption">Chopping board trajectory reconstruction</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- BibTeX -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3">BibTeX</h2>
+    <div class="bibtex-wrapper">
+      <button class="copy-btn" onclick="copyBibtex()">Copy</button>
+      <div class="bibtex-box">@inproceedings{saroha2026egoflow,
+  title     = {EgoFlow: Gradient-Guided Flow Matching for Egocentric
+               6DoF Object Motion Generation},
+  author    = {Saroha, Abhishek and Zeng, Huajian and Zuo, Xingxing
+               and Cremers, Daniel and Wang, Xi},
+  booktitle = {Proceedings of the IEEE/CVF Conference on Computer
+               Vision and Pattern Recognition (CVPR)},
+  year      = {2026}
+}</div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="content has-text-centered">
+      <p>
+        This website template is borrowed from <a href="https://nerfies.github.io" target="_blank">Nerfies</a> and licensed under
+        <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank">CC BY-SA 4.0</a>.
+      </p>
+    </div>
+  </div>
+</footer>
+
+<script>
+function copyBibtex() {
+  const text = document.querySelector('.bibtex-box').textContent.trim();
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = document.querySelector('.copy-btn');
+    btn.textContent = 'Copied!';
+    setTimeout(() => btn.textContent = 'Copy', 2000);
+  });
+}
+</script>
+
+</body>
+</html>
