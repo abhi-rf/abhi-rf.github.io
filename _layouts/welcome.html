@@ -6,125 +6,270 @@ classes: wide
 {{ content }}
 
 <style>
-    /* Global typography overrides */
+    /* ===== GLOBAL TYPOGRAPHY OVERHAUL ===== */
+    body, .page__content p, .page__content li, .page__content {
+        font-family: 'Lato', sans-serif !important;
+        font-weight: 300;
+    }
+
     .page__content p {
-        font-size: 0.92em;
-        line-height: 1.7;
-        color: #444;
+        font-size: 15px;
+        line-height: 1.75;
+        color: #333;
     }
 
+    /* Headings */
     .page__content h2 {
-        font-size: 1.25em;
+        font-family: 'Raleway', sans-serif !important;
+        font-size: 1.3em;
         font-weight: 600;
-        margin-top: 1.2em;
+        color: #111;
+        margin-top: 1.4em;
         margin-bottom: 0.6em;
-        color: #222;
-        border-bottom: 1px solid #eee;
-        padding-bottom: 6px;
+        padding-bottom: 8px;
+        border-bottom: 2px solid #1772d0;
+        display: inline-block;
+    }
+    .page__content h2::after {
+        content: '';
+        display: block;
     }
 
-    /* Research interests - single line */
+    /* Barron-style links */
+    .page__content a {
+        color: #1772d0;
+        text-decoration: none;
+    }
+    .page__content a:hover {
+        color: #f09228;
+    }
+
+    /* ===== INSTITUTION LOGOS ===== */
+    .institution-logos {
+        display: flex;
+        align-items: center;
+        gap: 28px;
+        margin: 12px 0 8px 0;
+        opacity: 0.7;
+    }
+    .institution-logos img {
+        height: 36px;
+        object-fit: contain;
+        filter: grayscale(30%);
+        transition: filter 0.2s, opacity 0.2s;
+    }
+    .institution-logos img:hover {
+        filter: grayscale(0%);
+        opacity: 1;
+    }
+
+    /* ===== RESEARCH INTERESTS ===== */
     .research-interests {
         display: flex;
         flex-wrap: nowrap;
         gap: 6px;
-        margin: 4px 0 12px 0;
+        margin: 6px 0 10px 0;
         overflow-x: auto;
     }
     .research-interests span {
-        background: #f0f4f8;
-        border: 1px solid #d0d7de;
-        border-radius: 16px;
-        padding: 2px 11px;
-        font-size: 0.78em;
+        background: linear-gradient(135deg, #f0f4f8, #e8edf2);
+        border: 1px solid #cdd5de;
+        border-radius: 20px;
+        padding: 3px 12px;
+        font-size: 0.76em;
+        font-weight: 400;
         color: #444;
         white-space: nowrap;
+        letter-spacing: 0.2px;
     }
 
-    /* Featured publications */
+    /* ===== NEWS SECTION ===== */
+    .news-container {
+        max-height: 180px;
+        overflow: hidden;
+        transition: max-height 0.4s ease;
+        position: relative;
+    }
+    .news-container.expanded {
+        max-height: 2000px;
+    }
+    .news-item {
+        font-size: 0.88em;
+        line-height: 1.6;
+        padding: 6px 0;
+        color: #444;
+        border-bottom: 1px solid #f0f0f0;
+    }
+    .news-item:last-child {
+        border-bottom: none;
+    }
+    .news-item b {
+        color: #1772d0;
+        font-weight: 400;
+        min-width: 110px;
+        display: inline-block;
+    }
+    .news-toggle {
+        display: inline-block;
+        font-size: 0.82em;
+        color: #1772d0;
+        cursor: pointer;
+        margin-top: 6px;
+        font-weight: 400;
+        border: none;
+        background: none;
+        padding: 0;
+    }
+    .news-toggle:hover {
+        color: #f09228;
+    }
+
+    /* ===== FEATURED PUBLICATIONS ===== */
     .featured-pub {
         display: flex;
         gap: 18px;
-        margin-bottom: 22px;
+        padding: 14px;
+        margin-bottom: 14px;
+        border-radius: 8px;
         align-items: flex-start;
+        transition: background 0.2s, box-shadow 0.2s;
+        border: 1px solid transparent;
+    }
+    .featured-pub:hover {
+        background: #f8fafe;
+        border-color: #e4ecf4;
+        box-shadow: 0 2px 12px rgba(23, 114, 208, 0.06);
+    }
+    .featured-pub.highlight {
+        background: #fffef5;
+        border-color: #f0ecd0;
+    }
+    .featured-pub.highlight:hover {
+        background: #fffde8;
+        box-shadow: 0 2px 12px rgba(200, 180, 50, 0.08);
     }
     .featured-pub img {
-        width: 200px;
-        min-width: 200px;
-        border-radius: 5px;
-        border: 1px solid #e8e8e8;
+        width: 195px;
+        min-width: 195px;
+        border-radius: 6px;
+        border: 1px solid #e0e0e0;
+        transition: transform 0.2s;
+    }
+    .featured-pub:hover img {
+        transform: scale(1.02);
     }
     .featured-pub-info h4 {
         margin: 0 0 3px 0;
         font-size: 0.92em;
-        font-weight: 600;
+        font-weight: 700;
         line-height: 1.4;
+        font-family: 'Lato', sans-serif;
     }
     .featured-pub-info h4 a {
-        color: #222;
+        color: #111;
         text-decoration: none;
     }
     .featured-pub-info h4 a:hover {
-        color: #0969da;
+        color: #1772d0;
     }
     .featured-pub-info .venue {
-        font-size: 0.8em;
-        color: #777;
+        font-size: 0.78em;
+        color: #1772d0;
         margin-bottom: 2px;
-        font-weight: 500;
+        font-weight: 700;
+        letter-spacing: 0.3px;
     }
     .featured-pub-info .authors {
         font-size: 0.8em;
         color: #666;
         margin-bottom: 5px;
+        font-weight: 300;
     }
     .featured-pub-info .desc {
         font-size: 0.82em;
         color: #555;
         line-height: 1.5;
+        font-weight: 300;
     }
     .featured-pub-info .pub-links {
         font-size: 0.78em;
-        margin-top: 5px;
+        margin-top: 6px;
     }
     .featured-pub-info .pub-links a {
-        margin-right: 10px;
-        color: #0969da;
+        display: inline-block;
+        margin-right: 6px;
+        color: #1772d0;
         text-decoration: none;
-        font-weight: 500;
+        font-weight: 400;
+        padding: 1px 8px;
+        border: 1px solid #d0dbe8;
+        border-radius: 4px;
+        transition: all 0.15s;
     }
     .featured-pub-info .pub-links a:hover {
-        text-decoration: underline;
+        background: #1772d0;
+        color: #fff;
+        border-color: #1772d0;
     }
 
-    /* News section */
-    .news-item {
-        font-size: 0.85em;
-        line-height: 1.6;
-        margin-bottom: 6px;
-        color: #555;
+    .see-all {
+        text-align: center;
+        margin-top: 8px;
     }
-    .news-item b {
-        color: #333;
-        font-weight: 600;
+    .see-all a {
+        font-size: 0.88em;
+        color: #1772d0;
+        font-weight: 400;
+        text-decoration: none;
+        padding: 6px 20px;
+        border: 1px solid #1772d0;
+        border-radius: 6px;
+        transition: all 0.2s;
     }
-    .news-item hr {
-        border: none;
-        border-top: 1px solid #f0f0f0;
-        margin: 8px 0;
+    .see-all a:hover {
+        background: #1772d0;
+        color: #fff;
     }
 
-    /* Dividers */
+    /* ===== DIVIDERS ===== */
     .section-hr hr {
         border: none;
-        border-top: 1px solid #eee;
-        margin: 16px 0;
+        border-top: 1px solid #eaeaea;
+        margin: 20px 0;
     }
 
+    /* ===== PROFILE PHOTO HOVER ===== */
+    .author__avatar img {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .author__avatar img:hover {
+        transform: scale(1.05) translateY(-3px);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    }
+
+    /* ===== SIDEBAR POLISH ===== */
+    .author__name {
+        font-family: 'Raleway', sans-serif !important;
+        font-weight: 700 !important;
+    }
+    .author__bio {
+        font-size: 0.85em;
+        color: #555;
+    }
+    .author__urls a {
+        color: #1772d0 !important;
+    }
+    .author__urls a:hover {
+        color: #f09228 !important;
+    }
+
+    /* ===== RESPONSIVE ===== */
     @media (max-width: 600px) {
-        .featured-pub { flex-direction: column; }
+        .featured-pub { flex-direction: column; padding: 10px; }
         .featured-pub img { width: 100%; min-width: unset; }
         .research-interests { flex-wrap: wrap; }
+        .institution-logos { gap: 16px; }
+        .institution-logos img { height: 28px; }
     }
 </style>
 
@@ -135,6 +280,12 @@ classes: wide
 <p align="justify">
     Previously, I worked on neural scene stylization using 3D Gaussian Splatting. I am broadly interested in problems at the intersection of generative modeling, 3D vision, and embodied perception.
 </p>
+
+<div class="institution-logos">
+    <a href="https://www.tum.de" target="_blank"><img src="/assets/images/tum_logo.png" alt="TUM"></a>
+    <a href="https://mcml.ai" target="_blank"><img src="/assets/images/mcml_logo.png" alt="MCML"></a>
+    <a href="https://cvg.cit.tum.de" target="_blank"><img src="/assets/images/tum_logo_small.png" alt="CVG"></a>
+</div>
 
 <h2>Research Interests</h2>
 <div class="research-interests">
@@ -151,18 +302,20 @@ classes: wide
 <div class="section-hr"><hr></div>
 
 <h2>News</h2>
+<div class="news-container" id="newsContainer">
 {% for news in site.data.news %}
 <div class="news-item">
-    <b>{{ news.date }}</b> &mdash; {{ news.description | markdownify | remove: '<p>' | remove: '</p>' }}
-    <hr>
+    <b>{{ news.date }}</b> {{ news.description | markdownify | remove: '<p>' | remove: '</p>' }}
 </div>
 {% endfor %}
+</div>
+<button class="news-toggle" id="newsToggle" onclick="toggleNews()">Show more</button>
 
 <div class="section-hr"><hr></div>
 
 <h2>Selected Publications</h2>
 
-<div class="featured-pub">
+<div class="featured-pub highlight">
     <a href="/egoflow/"><img src="/publications/egoflow/assets/teaser.png" alt="EgoFlow teaser"></a>
     <div class="featured-pub-info">
         <h4><a href="/egoflow/">EgoFlow: Gradient-Guided Flow Matching for Egocentric 6DoF Object Motion Generation</a></h4>
@@ -176,7 +329,7 @@ classes: wide
     </div>
 </div>
 
-<div class="featured-pub">
+<div class="featured-pub highlight">
     <a href="https://huajian-zeng.github.io/projects/gmt/"><img src="/publications/gmt/assets/method.png" alt="GMT method"></a>
     <div class="featured-pub-info">
         <h4><a href="https://huajian-zeng.github.io/projects/gmt/">GMT: Goal-Conditioned Multimodal Transformer for 6-DOF Object Trajectory Synthesis in 3D Scenes</a></h4>
@@ -204,3 +357,21 @@ classes: wide
         </div>
     </div>
 </div>
+
+<div class="see-all">
+    <a href="/publications/">See all publications &rarr;</a>
+</div>
+
+<script>
+function toggleNews() {
+    var container = document.getElementById('newsContainer');
+    var btn = document.getElementById('newsToggle');
+    if (container.classList.contains('expanded')) {
+        container.classList.remove('expanded');
+        btn.textContent = 'Show more';
+    } else {
+        container.classList.add('expanded');
+        btn.textContent = 'Show less';
+    }
+}
+</script>

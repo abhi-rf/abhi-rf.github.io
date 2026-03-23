@@ -18,6 +18,10 @@
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
 
+title: "Abhishek Saroha"
+description: "PhD student at TUM CVG. Research in egocentric vision, generative models, and 3D scene understanding."
+url: "https://abhi-rf.github.io"
+
 # Build settings
 remote_theme: mmistakes/minimal-mistakes
 minimal_mistakes_skin: "air"
