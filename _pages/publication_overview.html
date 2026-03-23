@@ -15,19 +15,179 @@ author_profile: false
     <link rel="stylesheet" href="/assets://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
     <link rel="stylesheet" href="/assets/css/slider-component.css">
     <link rel="stylesheet" href="/assets/css/index.css">
-  </head>
+</head>
+
+<style>
+    /* ===== PUBLICATION CARDS ===== */
+    .publication-block {
+        font-family: 'Lato', Verdana, Helvetica, sans-serif;
+        background: #fff;
+        padding: 14px;
+        border-radius: 8px;
+        box-shadow: 0 4px 20px rgba(38, 57, 77, 0.12);
+        margin-bottom: 18px;
+        display: flex;
+        flex-direction: row;
+        transition: box-shadow 0.25s ease, transform 0.25s ease;
+        border: 1px solid #f0f0f0;
+    }
+    .publication-block:hover {
+        box-shadow: 0 8px 30px rgba(38, 57, 77, 0.2);
+        transform: translateY(-2px);
+    }
+
+    /* Thumbnail */
+    .publication-block .column.is-5 {
+        min-width: 200px;
+        max-width: 280px;
+        overflow: hidden;
+        border-radius: 6px;
+        position: relative;
+        display: flex;
+        align-items: center;
+    }
+    .publication-block .column.is-5 img {
+        width: 100%;
+        border-radius: 6px;
+        transition: transform 0.3s ease;
+    }
+    .publication-block:hover .column.is-5 img {
+        transform: scale(1.03);
+    }
+
+    /* Text content */
+    .publication-block .content {
+        padding: 0;
+    }
+
+    .publication-block .publication-title {
+        margin: 0 0 4px 0 !important;
+        font-weight: 600;
+        font-size: 1.05em;
+        line-height: 1.35;
+    }
+    .publication-block .publication-title a {
+        color: #111;
+        text-decoration: none;
+    }
+    .publication-block .publication-title a:hover {
+        color: #1772d0;
+    }
+
+    .publication-block .publication-venue {
+        color: #1772d0;
+        font-size: 0.85em;
+        font-weight: 600;
+        margin-bottom: 3px;
+    }
+    .publication-block .publication-venue-emph {
+        font-style: normal;
+        font-weight: 600;
+        color: firebrick;
+        padding-left: 0.25em;
+    }
+
+    .publication-block .publication-authors {
+        font-size: 0.85em;
+        color: #555;
+        margin-bottom: 6px;
+        font-weight: 300;
+        line-height: 1.5;
+    }
+    .publication-block .publication-authors .author-block {
+        display: inline;
+    }
+    .publication-block .publication-authors .author-me {
+        color: #111;
+        font-weight: 700;
+    }
+    .publication-block .publication-authors a {
+        color: #444 !important;
+        text-decoration: none;
+    }
+    .publication-block .publication-authors a:hover {
+        color: #1772d0 !important;
+        text-decoration: underline;
+    }
+
+    .publication-block .publication-description {
+        color: #555;
+        font-size: 0.84em;
+        line-height: 1.55;
+        margin: 4px 0 8px 0;
+        font-weight: 300;
+    }
+
+    /* Links as pill buttons */
+    .publication-block .content > p:last-child {
+        margin: 0;
+        font-size: 0.82em;
+    }
+    .publication-block .content > p:last-child a {
+        display: inline-block;
+        color: #1772d0;
+        text-decoration: none;
+        padding: 2px 10px;
+        border: 1px solid #d0dbe8;
+        border-radius: 4px;
+        margin-right: 4px;
+        margin-bottom: 4px;
+        font-weight: 400;
+        transition: all 0.15s;
+        cursor: pointer;
+    }
+    .publication-block .content > p:last-child a:hover {
+        background: #1772d0;
+        color: #fff;
+        border-color: #1772d0;
+    }
+
+    /* Remove pipe separators between links */
+    .pub-link-sep { display: none; }
+
+    /* Page heading */
+    .page-title-custom {
+        font-family: 'Raleway', sans-serif;
+        font-weight: 700;
+        font-size: 1.8em;
+        color: #111;
+        margin-bottom: 24px;
+        padding-bottom: 10px;
+        border-bottom: 2px solid #1772d0;
+        display: inline-block;
+    }
+
+    /* Divider between cards */
+    section.section hr {
+        display: none;
+    }
+
+    /* Year grouping (optional future use) */
+
+    @media (max-width: 768px) {
+        .publication-block {
+            flex-direction: column;
+            min-width: unset;
+        }
+        .publication-block .column.is-5 {
+            max-width: 100%;
+            min-width: unset;
+        }
+    }
+</style>
 
 <section class="section">
     <div class="container is-max-desktop">
+        <h1 class="page-title-custom">Publications</h1>
         {% assign sorted = site.publications | reverse %}
         {% for publication in sorted %}
-        <div class="publication-block columns">
-            <div class="column is-5">    
+        <div class="publication-block">
+            <div class="column is-5">
                 {% if publication.external_link != nil %}
                     {% assign base_link = publication.external_link %}
                 {% else %}
                     {% assign base_link = publication.permalink %}
-                {% endif %} 
+                {% endif %}
                 {% if publication.image_mouseover contains "mp4" %}
                 <div class="publication-image {% if publication.image_mouseover %}publication-mousecell{% endif %}">
                     <video autoplay preload playsinline class="" height="100%" loop muted width="100%">
@@ -37,11 +197,11 @@ author_profile: false
                     <img alt="{{publication.title}}" src="{{base_link}}{{ publication.image }}" />
                 </div>
                 {% elsif publication.image_mouseover %}
-                    <img width="100%" src="{{base_link}}{{ publication.image }}" onmouseover="this.src='{{base_link}}{{ publication.image_mouseover }}';" onmouseout="this.src='{{base_link}}{{ publication.image }}';" style="display: inline-block;"/>
+                    <img src="{{base_link}}{{ publication.image }}" onmouseover="this.src='{{base_link}}{{ publication.image_mouseover }}';" onmouseout="this.src='{{base_link}}{{ publication.image }}';" />
                 {% else %}
-                    <img width="100%" src="{{base_link}}{{ publication.image }}" style="display: inline-block;"/>
+                    <img src="{{base_link}}{{ publication.image }}" />
                 {% endif %}
-            </div>     
+            </div>
             <div class="column">
                 <div class="content">
                 {% if publication.external_link != nil %}
@@ -49,6 +209,12 @@ author_profile: false
                 {% else %}
                     <h3 class="publication-title"><a href="{{ publication.permalink }}">{{ publication.title }}</a></h3>
                 {% endif %}
+                <div class="publication-venue">
+                    <span>{{ publication.venue }}</span>
+                    {% for award in publication.awards %}
+                    <span class="publication-venue-emph">{{ award }}</span>
+                    {% endfor %}
+                </div>
                 <div class="publication-authors">
                     {% for author_id in publication.authors %}
                     {% if site.data.authors_external[author_id.name] != nil %}
@@ -67,21 +233,14 @@ author_profile: false
                     </span>
                     {% endfor %}
                 </div>
-                <div class="publication-venue">
-                    <span>{{ publication.venue }}</span>
-                    {% for award in publication.awards %}
-                    <span class="publication-venue-emph">{{ award }}<span>
-                        {% endfor %}
-                </div>
                 <p class="publication-description">{{ publication.description }}</p>
                 <p>
                     {% for link in publication.links %}
                     <a href="{{ link.link }}">{{link.name}}</a>
-                    {% if forloop.last == false or publication.citation != nil %}|{% endif %}
                     {% endfor %}
                     {% if publication.citation != nil %}
                     <a onclick="CopyToClipboard('{{publication.citation}}')">
-                    Citation 
+                    Citation
                     <i class="fa fa-copy"></i>
                     </a>
                     {% endif %}
@@ -89,9 +248,18 @@ author_profile: false
                 </div>
             </div>
         </div>
-        {% if forloop.last == false %}
-        <hr>
-        {% endif %}
         {% endfor %}
     </div>
 </section>
+
+<script>
+function CopyToClipboard(text) {
+    navigator.clipboard.writeText(text).then(function() {
+        var note = document.createElement('div');
+        note.textContent = 'Citation copied!';
+        note.style.cssText = 'position:fixed;bottom:20px;right:20px;background:#1772d0;color:#fff;padding:10px 20px;border-radius:6px;font-size:14px;z-index:9999;font-family:Lato,sans-serif;box-shadow:0 4px 12px rgba(0,0,0,0.15);';
+        document.body.appendChild(note);
+        setTimeout(function() { note.remove(); }, 2000);
+    });
+}
+</script>
