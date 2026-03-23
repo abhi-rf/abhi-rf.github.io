@@ -12,7 +12,28 @@ classes: wide
         background-attachment: fixed !important;
     }
 
-    /* Subtle animated mesh accent */
+    /* Make EVERYTHING transparent so gradient shows through */
+    .initial-content,
+    .page,
+    .page__content,
+    .page__inner-wrap,
+    .archive,
+    .layout--archive,
+    .layout--single,
+    #main,
+    .sidebar,
+    .sidebar__right,
+    .author__content,
+    .author__urls-wrapper,
+    .masthead,
+    .greedy-nav,
+    .page__footer,
+    .page__footer footer {
+        background: transparent !important;
+        background-color: transparent !important;
+    }
+
+    /* Subtle radial glow accents */
     .page__content::before {
         content: '';
         position: fixed;
@@ -36,12 +57,10 @@ classes: wide
         z-index: -1;
     }
 
-    /* ===== SIDEBAR — light glass, strong contrast ===== */
+    /* ===== SIDEBAR — fully transparent, text with good contrast ===== */
     .sidebar {
-        background: rgba(255, 255, 255, 0.45) !important;
-        backdrop-filter: blur(20px);
-        -webkit-backdrop-filter: blur(20px);
-        border-right: 1px solid rgba(23, 114, 208, 0.08) !important;
+        background: transparent !important;
+        border-right: none !important;
     }
     .author__avatar img {
         border: 3px solid rgba(23, 114, 208, 0.15) !important;
@@ -119,13 +138,15 @@ classes: wide
 
     /* ===== MASTHEAD ===== */
     .masthead {
-        background: rgba(255, 255, 255, 0.6) !important;
-        backdrop-filter: blur(16px);
-        -webkit-backdrop-filter: blur(16px);
-        border-bottom: 1px solid rgba(23, 114, 208, 0.08) !important;
+        background: transparent !important;
+        border-bottom: none !important;
+        box-shadow: none !important;
+    }
+    .greedy-nav {
+        background: transparent !important;
     }
     .masthead a, .greedy-nav a, .greedy-nav .visible-links a {
-        color: #222 !important;
+        color: #333 !important;
         font-weight: 400;
     }
     .masthead a:hover, .greedy-nav a:hover {
@@ -363,11 +384,9 @@ classes: wide
 
     /* ===== FOOTER ===== */
     .page__footer {
-        background: rgba(255, 255, 255, 0.4) !important;
-        backdrop-filter: blur(16px);
-        -webkit-backdrop-filter: blur(16px);
-        border-top: 1px solid rgba(23, 114, 208, 0.08) !important;
-        color: #666 !important;
+        background: transparent !important;
+        border-top: none !important;
+        color: #888 !important;
     }
     .page__footer a {
         color: #1772d0 !important;
