@@ -36,8 +36,10 @@ author_profile: false
                     </video>
                     <img alt="{{publication.title}}" src="{{base_link}}{{ publication.image }}" />
                 </div>
-                {% else %}
+                {% elsif publication.image_mouseover %}
                     <img width="100%" src="{{base_link}}{{ publication.image }}" onmouseover="this.src='{{base_link}}{{ publication.image_mouseover }}';" onmouseout="this.src='{{base_link}}{{ publication.image }}';" style="display: inline-block;"/>
+                {% else %}
+                    <img width="100%" src="{{base_link}}{{ publication.image }}" style="display: inline-block;"/>
                 {% endif %}
             </div>     
             <div class="column">
