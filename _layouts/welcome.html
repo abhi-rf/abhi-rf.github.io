@@ -23,19 +23,20 @@ classes: wide
         padding-bottom: 6px;
     }
 
-    /* Research interests pills */
+    /* Research interests - single line */
     .research-interests {
         display: flex;
-        flex-wrap: wrap;
-        gap: 8px;
+        flex-wrap: nowrap;
+        gap: 6px;
         margin: 4px 0 12px 0;
+        overflow-x: auto;
     }
     .research-interests span {
         background: #f0f4f8;
         border: 1px solid #d0d7de;
         border-radius: 16px;
-        padding: 3px 13px;
-        font-size: 0.82em;
+        padding: 2px 11px;
+        font-size: 0.78em;
         color: #444;
         white-space: nowrap;
     }
@@ -123,6 +124,7 @@ classes: wide
     @media (max-width: 600px) {
         .featured-pub { flex-direction: column; }
         .featured-pub img { width: 100%; min-width: unset; }
+        .research-interests { flex-wrap: wrap; }
     }
 </style>
 
@@ -142,7 +144,19 @@ classes: wide
     <span>3D Scene Understanding</span>
     <span>Trajectory Generation</span>
     <span>Embodied Perception</span>
+    <span>Neural Scene Stylization</span>
+    <span>Gaussian Splatting</span>
 </div>
+
+<div class="section-hr"><hr></div>
+
+<h2>News</h2>
+{% for news in site.data.news %}
+<div class="news-item">
+    <b>{{ news.date }}</b> &mdash; {{ news.description | markdownify | remove: '<p>' | remove: '</p>' }}
+    <hr>
+</div>
+{% endfor %}
 
 <div class="section-hr"><hr></div>
 
@@ -190,13 +204,3 @@ classes: wide
         </div>
     </div>
 </div>
-
-<div class="section-hr"><hr></div>
-
-<h2>News</h2>
-{% for news in site.data.news %}
-<div class="news-item">
-    <b>{{ news.date }}</b> &mdash; {{ news.description | markdownify | remove: '<p>' | remove: '</p>' }}
-    <hr>
-</div>
-{% endfor %}
