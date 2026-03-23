@@ -1,7 +1,6 @@
 ---
 layout: publications
 permalink: /publications/gmt/
-external_link: https://huajian-zeng.github.io/projects/gmt/
 date: 2026_01_15
 image: assets/method.png
 

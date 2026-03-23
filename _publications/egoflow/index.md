@@ -1,7 +1,6 @@
 ---
 layout: publications
 permalink: /publications/egoflow/
-external_link: /egoflow/
 date: 2026_03_01
 image: assets/teaser.png
 
