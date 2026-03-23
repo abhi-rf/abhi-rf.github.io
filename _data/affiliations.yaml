@@ -13,3 +13,9 @@ oxford:
 mit:
   long: Massachusetts Institute of Technology
   short: MIT
+ethz:
+  long: ETH Zürich
+  short: ETH Zürich
+mbzuai:
+  long: Mohamed bin Zayed University of Artificial Intelligence
+  short: MBZUAI
