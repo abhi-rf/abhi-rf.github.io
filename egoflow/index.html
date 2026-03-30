@@ -4,230 +4,117 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>EgoFlow: Gradient-Guided Flow Matching for Egocentric 6DoF Object Motion Generation</title>
-  <meta name="description" content="EgoFlow: a flow-matching framework for physically plausible 6DoF object trajectory generation from egocentric videos. CVPR 2026.">
+  <meta name="description" content="EgoFlow generates physically plausible 6DoF object trajectories from egocentric videos using flow matching with gradient-guided physics. CVPR 2026.">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <style>
-    body {
-      font-family: 'Noto Sans', sans-serif;
-    }
+    body { font-family: 'Noto Sans', sans-serif; }
+    .hero-body { padding-bottom: 0.5rem; }
+    .publication-title { font-weight: 700; }
+    .publication-authors { font-size: 1.05rem; }
+    .publication-authors a { color: #363636; border-bottom: 1px dashed #999; }
+    .publication-authors a:hover { color: hsl(204,86%,53%); border-bottom-color: hsl(204,86%,53%); }
+    .author-block { display: inline-block; margin: 0 3px; }
+    .publication-venue { color: #555; font-size: 1rem; }
+    .link-block a { margin: 3px; }
 
-    .hero-body { padding-bottom: 1rem; }
-
-    .publication-title {
-      font-family: 'Noto Sans', sans-serif;
-      font-weight: 700;
-    }
-
-    .publication-authors {
-      font-size: 1.1rem;
-    }
-
-    .publication-authors a {
-      color: #363636;
-      border-bottom: 1px dashed #999;
-    }
-    .publication-authors a:hover {
-      color: hsl(204, 86%, 53%);
-      border-bottom-color: hsl(204, 86%, 53%);
-    }
-
-    .author-block { display: inline-block; margin: 0 4px; }
-
-    .publication-venue {
-      color: #555;
-      font-size: 1.05rem;
-    }
-
-    .link-block a {
-      margin: 4px;
-    }
-
-    /* Teaser */
-    .teaser-image {
-      max-width: 85%;
+    /* TL;DR banner */
+    .tldr-banner {
+      background: linear-gradient(135deg, #e8f4f8, #eef0fb);
+      border-radius: 12px;
+      padding: 14px 24px;
+      max-width: 820px;
       margin: 0 auto;
-    }
-
-    .teaser-caption {
-      font-size: 0.92rem;
-      color: #666;
-      max-width: 800px;
-      margin: 12px auto 0;
+      font-size: 1.05rem;
       line-height: 1.6;
+      color: #333;
     }
+    .tldr-banner strong { color: hsl(204,86%,43%); }
 
-    /* Section styling */
-    .section-divider {
-      border: none;
-      border-top: 1px solid #eee;
-      margin: 0;
+    /* Teaser video */
+    .teaser-video { border-radius: 10px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.1); }
+    .teaser-video video, .teaser-video img { display: block; width: 100%; }
+
+    /* Section */
+    .section { padding: 2rem 1.5rem; }
+    h2.title.is-3 { font-weight: 700; margin-bottom: 0.8rem !important; }
+    .section-divider { border: none; border-top: 1px solid #eee; margin: 0; }
+
+    /* Video gallery with pills */
+    .gallery-pills { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 12px; }
+    .gallery-pills button {
+      padding: 6px 14px; border-radius: 20px; border: 1.5px solid #ddd;
+      background: white; font-size: 0.82rem; cursor: pointer; transition: all 0.2s;
+      font-family: 'Noto Sans', sans-serif; color: #555;
     }
+    .gallery-pills button.active { background: hsl(204,86%,53%); color: white; border-color: hsl(204,86%,53%); }
+    .gallery-pills button:hover:not(.active) { border-color: hsl(204,86%,53%); color: hsl(204,86%,53%); }
 
-    .section { padding: 2.5rem 1.5rem; }
-
-    .results-section { padding: 2rem 1.5rem; }
-
-    h2.title.is-3 {
-      font-family: 'Noto Sans', sans-serif;
-      font-weight: 700;
-      margin-bottom: 1rem !important;
-    }
-
-    .abstract-text {
-      font-size: 1rem;
-      line-height: 1.85;
-      text-align: justify;
-    }
-
-    /* Video grid */
-    .video-container {
-      border-radius: 8px;
-      overflow: hidden;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-    }
-
-    .video-container video {
-      display: block;
-      width: 100%;
-    }
-
-    .video-caption {
-      font-size: 0.88rem;
-      color: #666;
-      margin-top: 8px;
-      text-align: center;
-      line-height: 1.5;
-    }
+    .comparison-video { border-radius: 8px; overflow: hidden; box-shadow: 0 2px 12px rgba(0,0,0,0.08); }
+    .comparison-video video { display: block; width: 100%; }
 
     /* Method figure */
-    .method-figure img {
-      border-radius: 6px;
-    }
+    .method-figure { border-radius: 8px; box-shadow: 0 2px 12px rgba(0,0,0,0.06); overflow: hidden; }
+    .method-figure img { display: block; width: 100%; }
+    .method-one-liner { font-size: 0.95rem; color: #555; line-height: 1.6; max-width: 800px; margin: 12px auto 0; }
 
-    .method-description {
-      font-size: 0.95rem;
-      line-height: 1.75;
+    /* Stat highlights */
+    .stat-row { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; margin: 20px 0; }
+    .stat-card {
+      background: linear-gradient(135deg, #f0f7ff, #eef0fb);
+      border-radius: 12px; padding: 20px 28px; text-align: center; min-width: 180px;
+      border: 1px solid #e0e8f0;
     }
+    .stat-card .number { font-size: 2.2rem; font-weight: 700; color: hsl(204,86%,43%); }
+    .stat-card .label { font-size: 0.82rem; color: #666; margin-top: 2px; }
 
-    /* Results images */
-    .results-figure {
-      border-radius: 6px;
-      border: 1px solid #eee;
-    }
+    /* Results figure */
+    .results-figure { border-radius: 6px; border: 1px solid #eee; }
+    .figure-caption { font-size: 0.88rem; color: #555; margin-top: 8px; line-height: 1.5; }
 
-    .figure-caption {
-      font-size: 0.9rem;
-      color: #555;
-      margin-top: 10px;
-      line-height: 1.6;
-    }
-
-    /* Compact tables */
-    .results-table {
-      font-size: 0.9rem;
-      margin: 0 auto;
-    }
-
-    .results-table th {
-      font-weight: 600;
-      font-size: 0.85rem;
-      white-space: nowrap;
-      background: #fafafa;
-      border-bottom: 2px solid #dbdbdb;
-    }
-
-    .results-table td {
-      white-space: nowrap;
-    }
-
-    .results-table .best {
-      font-weight: 700;
-      color: hsl(204, 86%, 43%);
-    }
-
-    .results-table .ours-row {
-      background: #f0f7ff;
-    }
-
-    .table-title {
-      font-size: 0.95rem;
-      font-weight: 600;
-      margin-bottom: 8px;
-    }
+    /* Tables */
+    .results-table { font-size: 0.88rem; margin: 0 auto; }
+    .results-table th { font-weight: 600; font-size: 0.82rem; white-space: nowrap; background: #fafafa; border-bottom: 2px solid #dbdbdb; }
+    .results-table td { white-space: nowrap; }
+    .results-table .best { font-weight: 700; color: hsl(204,86%,43%); }
+    .results-table .ours-row { background: #f0f7ff; }
+    .table-title { font-size: 0.92rem; font-weight: 600; margin-bottom: 6px; }
 
     /* BibTeX */
-    .bibtex-wrapper {
-      position: relative;
-    }
-
+    .bibtex-wrapper { position: relative; }
     .bibtex-box {
-      background: #f5f5f5;
-      border-radius: 8px;
-      padding: 16px 20px;
-      font-family: 'Courier New', monospace;
-      font-size: 0.82rem;
-      line-height: 1.65;
-      overflow-x: auto;
-      white-space: pre;
-      border: 1px solid #eee;
+      background: #f5f5f5; border-radius: 8px; padding: 14px 18px;
+      font-family: 'Courier New', monospace; font-size: 0.8rem;
+      line-height: 1.6; overflow-x: auto; white-space: pre; border: 1px solid #eee;
     }
-
     .copy-btn {
-      position: absolute;
-      top: 8px;
-      right: 8px;
-      background: white;
-      border: 1px solid #ddd;
-      border-radius: 6px;
-      padding: 3px 12px;
-      font-size: 0.75rem;
-      cursor: pointer;
-      color: #666;
-      transition: all 0.2s;
+      position: absolute; top: 8px; right: 8px; background: white;
+      border: 1px solid #ddd; border-radius: 6px; padding: 3px 12px;
+      font-size: 0.72rem; cursor: pointer; color: #666; transition: all 0.2s;
     }
-    .copy-btn:hover {
-      border-color: hsl(204, 86%, 53%);
-      color: hsl(204, 86%, 53%);
-    }
+    .copy-btn:hover { border-color: hsl(204,86%,53%); color: hsl(204,86%,53%); }
 
-    /* Footer */
-    .footer {
-      padding: 2rem 1.5rem;
-    }
-    .footer .content p {
-      font-size: 0.85rem;
-      color: #999;
-    }
-    .footer a {
-      color: hsl(204, 86%, 53%);
-    }
+    .footer { padding: 1.5rem; }
+    .footer .content p { font-size: 0.8rem; color: #999; }
+    .footer a { color: hsl(204,86%,53%); }
 
-    /* Responsive video grid */
     @media (max-width: 768px) {
-      .teaser-image { max-width: 100%; }
-      .publication-authors { font-size: 0.95rem; }
+      .stat-row { flex-direction: column; align-items: center; }
+      .stat-card { width: 100%; }
     }
   </style>
 </head>
 <body>
 
-<!-- Hero / Header -->
+<!-- Hero -->
 <section class="hero is-light">
   <div class="hero-body">
     <div class="container is-max-desktop has-text-centered">
-
-      <p class="mb-3">
-        <span class="tag is-info is-medium"><b>CVPR 2026</b></span>
-      </p>
-
+      <p class="mb-2"><span class="tag is-info is-medium"><b>CVPR 2026</b></span></p>
       <h1 class="title is-2 publication-title">
         EgoFlow: Gradient-Guided Flow Matching<br>for Egocentric 6DoF Object Motion Generation
       </h1>
-
       <div class="publication-authors mb-2">
         <span class="author-block"><a href="https://abhi-rf.github.io" target="_blank">Abhishek Saroha</a><sup>1,2</sup>,</span>
         <span class="author-block"><a href="https://huajian-zeng.github.io/" target="_blank">Huajian Zeng</a><sup>3</sup>,</span>
@@ -235,134 +122,110 @@
         <span class="author-block"><a href="https://vision.in.tum.de/members/cremers" target="_blank">Daniel Cremers</a><sup>1,2</sup>,</span>
         <span class="author-block"><a href="https://xiwang1212.github.io/homepage/" target="_blank">Xi Wang</a><sup>1,2,4</sup></span>
       </div>
-
-      <div class="publication-venue mb-4">
-        <sup>1</sup>TU M&uuml;nchen &ensp;
-        <sup>2</sup>MCML &ensp;
-        <sup>3</sup>MBZUAI &ensp;
-        <sup>4</sup>ETH Z&uuml;rich
+      <div class="publication-venue mb-3">
+        <sup>1</sup>TU M&uuml;nchen &ensp; <sup>2</sup>MCML &ensp; <sup>3</sup>MBZUAI &ensp; <sup>4</sup>ETH Z&uuml;rich
       </div>
-
       <div class="link-block">
-        <a class="button is-dark is-rounded is-small" href="#">
-          <span class="icon"><i class="fas fa-file-pdf"></i></span>
-          <span>Paper</span>
-        </a>
-        <a class="button is-dark is-rounded is-small" href="#">
-          <span class="icon"><i class="ai ai-arxiv"></i></span>
-          <span>arXiv</span>
-        </a>
-        <a class="button is-dark is-rounded is-small" href="#">
-          <span class="icon"><i class="fab fa-github"></i></span>
-          <span>Code (Coming Soon)</span>
-        </a>
+        <a class="button is-dark is-rounded is-small" href="#"><span class="icon"><i class="fas fa-file-pdf"></i></span><span>Paper</span></a>
+        <a class="button is-dark is-rounded is-small" href="#"><span class="icon"><i class="fab fa-github"></i></span><span>Code (Coming Soon)</span></a>
       </div>
-
     </div>
   </div>
 </section>
 
 <!-- Teaser -->
-<section class="section" style="padding-top: 2rem; padding-bottom: 1.5rem;">
-  <div class="container is-max-desktop has-text-centered">
-    <div class="teaser-image">
-      <img src="static/images/teaser.png" alt="EgoFlow teaser figure showing trajectory generation across diverse environments.">
+<section class="section" style="padding-top: 1.5rem; padding-bottom: 1rem;">
+  <div class="container is-max-desktop">
+    <div class="teaser-video has-text-centered">
+      <img src="static/images/teaser.png" alt="EgoFlow generates physically valid 6DoF trajectories from egocentric video.">
     </div>
-    <p class="teaser-caption">
-      Given a textual command and the surrounding environment, <b>EgoFlow</b> generates physically valid 6DoF object trajectories that respect spatial constraints across diverse environments by learning from egocentric videos.
+    <div class="has-text-centered mt-4">
+      <div class="tldr-banner">
+        <strong>TL;DR:</strong> EgoFlow learns to generate 6DoF object trajectories from egocentric video. A hybrid Mamba-Transformer backbone captures multimodal scene context, and gradient-guided sampling enforces physics at test time, <strong>reducing collisions by 79%</strong>.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Key numbers -->
+<section class="section" style="padding-top: 0.5rem; padding-bottom: 1rem;">
+  <div class="container is-max-desktop">
+    <div class="stat-row">
+      <div class="stat-card"><div class="number">79%</div><div class="label">Collision reduction<br>from gradient guidance</div></div>
+      <div class="stat-card"><div class="number">2.5%</div><div class="label">Collision rate<br>on HD-EPIC</div></div>
+      <div class="stat-card"><div class="number">20</div><div class="label">Euler steps<br>at inference</div></div>
+      <div class="stat-card"><div class="number">Zero-shot</div><div class="label">Generalization<br>to unseen HOT3D</div></div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- Method (figure-first, minimal text) -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 has-text-centered">Method</h2>
+    <div class="method-figure">
+      <img src="static/images/method.png" alt="EgoFlow architecture: hybrid Mamba-Transformer-Perceiver with multimodal conditioning and gradient-guided flow matching.">
+    </div>
+    <p class="method-one-liner has-text-centered">
+      Flow matching learns velocity fields from noise to trajectories. Bidirectional Mamba encodes temporal dynamics, Perceiver cross-attention fuses multimodal context, and gradient-guided sampling adds collision avoidance, rotational consistency, and velocity smoothness at test time.
     </p>
   </div>
 </section>
 
 <hr class="section-divider">
 
-<!-- Abstract -->
+<!-- Results: Video Gallery -->
 <section class="section">
   <div class="container is-max-desktop">
-    <h2 class="title is-3">Abstract</h2>
-    <p class="abstract-text">
-      Understanding and predicting object motion from egocentric video is fundamental to embodied perception and interaction. However, generating physically consistent 6DoF trajectories remains challenging due to occlusions, fast motion, and the lack of explicit physical reasoning in existing generative models. We present <b>EgoFlow</b>, a flow-matching framework that synthesizes realistic and physically plausible trajectories conditioned on multimodal egocentric observations. EgoFlow employs a hybrid Mamba&ndash;Transformer&ndash;Perceiver architecture to jointly model temporal dynamics, scene geometry, and semantic intent, while a gradient-guided inference process enforces differentiable physical constraints such as collision avoidance and motion smoothness. This combination yields coherent and controllable motion generation without post-hoc filtering or additional supervision. Experiments on real-world datasets HD-EPIC, EgoExo4D, and HOT3D show that EgoFlow outperforms diffusion-based and transformer baselines in accuracy, generalization, and physical realism, <b>reducing collision rates by up to 79%</b>, and strong generalization to unseen scenes.
-    </p>
-  </div>
-</section>
+    <h2 class="title is-3 has-text-centered">Qualitative Results</h2>
 
-<hr class="section-divider">
-
-<!-- Method -->
-<section class="section">
-  <div class="container is-max-desktop">
-    <h2 class="title is-3">Method</h2>
-    <div class="method-figure has-text-centered mb-4">
-      <img src="static/images/method.png" alt="EgoFlow architecture overview" style="max-width: 100%;">
-    </div>
-    <p class="method-description">
-      EgoFlow formulates trajectory synthesis as a continuous transport process using <b>flow matching</b>, learning deterministic velocity fields that map noise to realistic 6DoF trajectories. Multimodal conditioning fuses scene point clouds (PointNet++), fixture layouts (self-attention over oriented bounding boxes), trajectory history, CLIP-encoded text/category embeddings, and goal pose into a unified representation.
-    </p>
-    <p class="method-description">
-      A <b>hybrid Mamba&ndash;Transformer&ndash;Perceiver architecture</b> processes this in three stages: bidirectional Mamba layers for efficient temporal encoding, Perceiver-style cross-attention for multimodal reasoning, and a final Mamba refinement stage. At inference, <b>gradient-guided sampling</b> refines the predicted velocity via differentiable physical costs&mdash;SDF-based collision avoidance, rotational consistency, and translational smoothness&mdash;enforcing physical plausibility without requiring constraint labels during training.
-    </p>
-  </div>
-</section>
-
-<hr class="section-divider">
-
-<!-- Qualitative Videos -->
-<section class="section">
-  <div class="container is-max-desktop">
-    <h2 class="title is-3">Results</h2>
-    <p class="mb-5">We compare EgoFlow against baselines on HD-EPIC (realistic kitchens) and HOT3D (zero-shot cross-dataset). Our method generates smoother, more physically plausible trajectories while significantly reducing collisions.</p>
-
-    <!-- HD-EPIC Video -->
-    <h3 class="title is-5 mb-3">HD-EPIC &mdash; Qualitative Comparison</h3>
-    <div class="video-container">
-      <video autoplay loop muted playsinline>
-        <source src="static/videos/hdepic_qualitative.mp4" type="video/mp4">
-      </video>
-    </div>
-    <p class="video-caption">Comparison of EgoFlow against baselines on HD-EPIC kitchen sequences. Green: history, colored: predictions.</p>
-
-    <!-- HD-EPIC Qualitative Image -->
-    <div class="has-text-centered mt-5 mb-5">
-      <img src="static/images/hdepic_qualitative.png" alt="HD-EPIC qualitative comparison" class="results-figure" style="max-width: 100%;">
-      <p class="figure-caption"><b>HD-EPIC Qualitative Results.</b> EgoFlow generates plausible trajectories that take natural and smooth paths to the target pose, unlike baselines which often deviate or collide.</p>
-    </div>
-
-    <!-- HOT3D Qualitative Image -->
-    <h3 class="title is-5 mb-3 mt-5">HOT3D &mdash; Zero-Shot Generalization</h3>
-    <div class="has-text-centered mb-5">
-      <img src="static/images/hot3d_qualitative.png" alt="HOT3D qualitative comparison" class="results-figure" style="max-width: 100%;">
-      <p class="figure-caption"><b>HOT3D Zero-Shot Results.</b> Trained on Ego-Exo4D, tested on HOT3D without fine-tuning. EgoFlow produces geometrically coherent 6DoF trajectories in unseen environments.</p>
-    </div>
-
-    <!-- Diffusion vs Flow Matching -->
-    <h3 class="title is-5 mb-3 mt-5">Flow Matching vs. Diffusion</h3>
-    <div class="columns">
-      <div class="column is-8 is-offset-2">
-        <div class="video-container">
-          <video autoplay loop muted playsinline>
-            <source src="static/videos/diffusion_flow_qualitative.mp4" type="video/mp4">
-          </video>
-        </div>
-        <p class="video-caption">Flow matching produces smoother, more coherent trajectories compared to diffusion-based generation.</p>
+    <!-- Scene selector pills -->
+    <div class="has-text-centered mb-4">
+      <div class="gallery-pills" style="justify-content: center;">
+        <button class="active" onclick="switchVideo('hdepic', this)">HD-EPIC Comparison</button>
+        <button onclick="switchVideo('flow_vs_diff', this)">Flow vs. Diffusion</button>
+        <button onclick="switchVideo('data_pan', this)">Data: Pan Tracking</button>
+        <button onclick="switchVideo('data_board', this)">Data: Chopping Board</button>
       </div>
     </div>
 
-    <!-- Compact Comparison Tables -->
-    <h3 class="title is-5 mb-3 mt-6">Quantitative Comparison</h3>
-    <div class="columns is-multiline">
+    <!-- Video display (double buffer) -->
+    <div class="comparison-video has-text-centered">
+      <video id="galleryVideo" autoplay loop muted playsinline style="width:100%;">
+        <source src="static/videos/hdepic_qualitative.mp4" type="video/mp4">
+      </video>
+    </div>
+    <p class="figure-caption has-text-centered mt-2" id="galleryCaption">
+      Comparison against baselines on HD-EPIC kitchen scenes. Green: observed history. EgoFlow generates smooth, collision-free paths.
+    </p>
+
+    <!-- Static qualitative figures -->
+    <div class="columns mt-5">
+      <div class="column is-6">
+        <img src="static/images/hdepic_qualitative.png" alt="HD-EPIC qualitative" class="results-figure" style="width:100%;">
+        <p class="figure-caption"><b>HD-EPIC.</b> EgoFlow reaches the target via natural paths.</p>
+      </div>
+      <div class="column is-6">
+        <img src="static/images/hot3d_qualitative.png" alt="HOT3D qualitative" class="results-figure" style="width:100%;">
+        <p class="figure-caption"><b>HOT3D (zero-shot).</b> Unseen scenes, no fine-tuning.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- Quantitative -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 has-text-centered">Quantitative Comparison</h2>
+    <div class="columns">
       <div class="column is-7">
         <p class="table-title">HD-EPIC</p>
         <table class="table is-hoverable is-fullwidth results-table">
-          <thead>
-            <tr>
-              <th>Model</th>
-              <th>ADE &darr;</th>
-              <th>FDE &darr;</th>
-              <th>Fr&eacute;chet &darr;</th>
-              <th>Geodesic &darr;</th>
-              <th>Coll. &darr;</th>
-            </tr>
-          </thead>
+          <thead><tr><th>Model</th><th>ADE &darr;</th><th>FDE &darr;</th><th>Fr&eacute;chet &darr;</th><th>Geodesic &darr;</th><th>Coll. &darr;</th></tr></thead>
           <tbody>
             <tr><td>GIMO</td><td>0.285</td><td>0.509</td><td>0.210</td><td class="best">0.725</td><td>23.5%</td></tr>
             <tr><td>CHOIS</td><td>0.471</td><td>0.755</td><td>0.262</td><td>1.255</td><td>18.7%</td></tr>
@@ -374,14 +237,7 @@
       <div class="column is-5">
         <p class="table-title">HOT3D (Zero-Shot)</p>
         <table class="table is-hoverable is-fullwidth results-table">
-          <thead>
-            <tr>
-              <th>Model</th>
-              <th>ADE &darr;</th>
-              <th>FDE &darr;</th>
-              <th>GD &darr;</th>
-            </tr>
-          </thead>
+          <thead><tr><th>Model</th><th>ADE &darr;</th><th>FDE &darr;</th><th>GD &darr;</th></tr></thead>
           <tbody>
             <tr><td>GIMO</td><td>0.299</td><td>0.436</td><td>2.06</td></tr>
             <tr><td>CHOIS</td><td>0.513</td><td>0.571</td><td>2.46</td></tr>
@@ -389,34 +245,6 @@
             <tr class="ours-row"><td><b>EgoFlow</b></td><td class="best">0.265</td><td class="best">0.027</td><td>1.49</td></tr>
           </tbody>
         </table>
-      </div>
-    </div>
-  </div>
-</section>
-
-<hr class="section-divider">
-
-<!-- Data Processing -->
-<section class="section">
-  <div class="container is-max-desktop">
-    <h2 class="title is-3">HD-EPIC Data Processing</h2>
-    <p class="mb-4">HD-EPIC provides only sparse object annotations. We reconstruct continuous 6DoF trajectories by tracking the manipulating hand as a rigid-body proxy using Project Aria's MPS. Below we show the reconstructed 3D object positions projected back onto egocentric frames for verification.</p>
-    <div class="columns">
-      <div class="column is-6">
-        <div class="video-container">
-          <video autoplay loop muted playsinline>
-            <source src="static/videos/data_processing_pan.mp4" type="video/mp4">
-          </video>
-        </div>
-        <p class="video-caption">Pan trajectory reconstruction</p>
-      </div>
-      <div class="column is-6">
-        <div class="video-container">
-          <video autoplay loop muted playsinline>
-            <source src="static/videos/data_processing_chopping_board.mp4" type="video/mp4">
-          </video>
-        </div>
-        <p class="video-caption">Chopping board trajectory reconstruction</p>
       </div>
     </div>
   </div>
@@ -446,15 +274,31 @@
 <footer class="footer">
   <div class="container">
     <div class="content has-text-centered">
-      <p>
-        This website template is borrowed from <a href="https://nerfies.github.io" target="_blank">Nerfies</a> and licensed under
-        <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank">CC BY-SA 4.0</a>.
-      </p>
+      <p>Template borrowed from <a href="https://nerfies.github.io" target="_blank">Nerfies</a>. Licensed under <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank">CC BY-SA 4.0</a>.</p>
     </div>
   </div>
 </footer>
 
 <script>
+const videoMap = {
+  'hdepic': { src: 'static/videos/hdepic_qualitative.mp4', caption: 'Comparison against baselines on HD-EPIC kitchen scenes. Green: observed history. EgoFlow generates smooth, collision-free paths.' },
+  'flow_vs_diff': { src: 'static/videos/diffusion_flow_qualitative.mp4', caption: 'Flow matching produces smoother, more coherent trajectories than diffusion-based generation.' },
+  'data_pan': { src: 'static/videos/data_processing_pan.mp4', caption: 'Reconstructed 3D pan trajectory projected onto egocentric frames. Hand tracking as rigid-body proxy.' },
+  'data_board': { src: 'static/videos/data_processing_chopping_board.mp4', caption: 'Chopping board trajectory reconstruction from HD-EPIC using Project Aria MPS hand tracking.' },
+};
+
+function switchVideo(key, btn) {
+  const vid = document.getElementById('galleryVideo');
+  const cap = document.getElementById('galleryCaption');
+  const info = videoMap[key];
+  vid.src = info.src;
+  vid.load();
+  vid.play();
+  cap.textContent = info.caption;
+  document.querySelectorAll('.gallery-pills button').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
 function copyBibtex() {
   const text = document.querySelector('.bibtex-box').textContent.trim();
   navigator.clipboard.writeText(text).then(() => {
