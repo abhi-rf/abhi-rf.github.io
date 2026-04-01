@@ -201,16 +201,14 @@
       Comparison against baselines on HD-EPIC kitchen scenes. Green: observed history. EgoFlow generates smooth, collision-free paths.
     </p>
 
-    <!-- Static qualitative figures -->
-    <div class="columns mt-5">
-      <div class="column is-6">
-        <img src="static/images/hdepic_qualitative.png" alt="HD-EPIC qualitative" class="results-figure" style="width:100%;">
-        <p class="figure-caption"><b>HD-EPIC.</b> EgoFlow reaches the target via natural paths.</p>
-      </div>
-      <div class="column is-6">
-        <img src="static/images/hot3d_qualitative.png" alt="HOT3D qualitative" class="results-figure" style="width:100%;">
-        <p class="figure-caption"><b>HOT3D (zero-shot).</b> Unseen scenes, no fine-tuning.</p>
-      </div>
+    <!-- Static qualitative figures - full width, stacked -->
+    <div class="has-text-centered mt-5">
+      <img src="static/images/hdepic_qualitative.png" alt="HD-EPIC qualitative" class="results-figure" style="width:100%;">
+      <p class="figure-caption"><b>HD-EPIC.</b> EgoFlow reaches the target via natural, collision-free paths.</p>
+    </div>
+    <div class="has-text-centered mt-5">
+      <img src="static/images/hot3d_qualitative.png" alt="HOT3D qualitative" class="results-figure" style="width:100%;">
+      <p class="figure-caption"><b>HOT3D (zero-shot).</b> Trained on Ego-Exo4D, tested on unseen HOT3D scenes without fine-tuning.</p>
     </div>
   </div>
 </section>
