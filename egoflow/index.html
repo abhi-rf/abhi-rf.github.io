@@ -564,10 +564,18 @@
       GIMO (left) vs. EgoFlow (right). GIMO fails to reach the target due to missing gaze information.
     </p>
 
-    <div class="result-figure">
-      <img src="static/images/hdepic_qualitative.png" alt="HD-EPIC qualitative">
+    <div style="margin-top:36px;">
+      <div class="pills">
+        <button class="active" onclick="switchImage('img_gimo', this)">vs. GIMO</button>
+        <button onclick="switchImage('img_chois', this)">vs. CHOIS</button>
+        <button onclick="switchImage('img_egoscaler', this)">vs. EgoScaler</button>
+        <button onclick="switchImage('img_gt', this)">vs. Ground Truth</button>
+      </div>
+      <div class="result-figure">
+        <img id="galleryImage" src="static/images/hdepic_gimo_vs_ours.png" alt="HD-EPIC qualitative comparison">
+      </div>
+      <p class="result-figure-caption" id="galleryImageCaption"><b>GIMO</b> (left) vs. <b>EgoFlow</b> (right). GIMO fails to reach the target.</p>
     </div>
-    <p class="result-figure-caption"><b>HD-EPIC.</b> EgoFlow reaches the target via natural, collision-free paths.</p>
 
     <!-- 2. HOT3D zero-shot -->
     <h3 style="color:var(--text-2); font-size:1.1rem; font-weight:600; margin-top:48px; margin-bottom:16px; text-align:center;">HOT3D Zero-Shot Generalization</h3>
@@ -683,6 +691,23 @@ function switchVideo(key, btn) {
   vid.play();
   cap.textContent = info.caption;
   document.querySelectorAll('.pills button').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+const imageMap = {
+  'img_gimo': { src: 'static/images/hdepic_gimo_vs_ours.png', caption: '<b>GIMO</b> (left) vs. <b>EgoFlow</b> (right). GIMO fails to reach the target.' },
+  'img_chois': { src: 'static/images/hdepic_chois_vs_ours.png', caption: '<b>CHOIS</b> (left) vs. <b>EgoFlow</b> (right). CHOIS deviates and accumulates errors.' },
+  'img_egoscaler': { src: 'static/images/hdepic_egoscaler_vs_ours.png', caption: '<b>EgoScaler</b> (left) vs. <b>EgoFlow</b> (right). EgoScaler produces less accurate trajectories.' },
+  'img_gt': { src: 'static/images/hdepic_egoflow_vs_gt.png', caption: '<b>EgoFlow</b> (left) vs. <b>Ground Truth</b> (right). Our predictions closely match the reference.' },
+};
+
+function switchImage(key, btn) {
+  const img = document.getElementById('galleryImage');
+  const cap = document.getElementById('galleryImageCaption');
+  const info = imageMap[key];
+  img.src = info.src;
+  cap.innerHTML = info.caption;
+  btn.closest('.pills').querySelectorAll('button').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
 }
 
