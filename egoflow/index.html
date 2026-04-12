@@ -547,13 +547,13 @@
 <section>
   <div class="container">
     <h2><span class="gradient">Qualitative Results</span></h2>
+    <!-- 1. HD-EPIC baseline comparisons -->
+    <h3 style="color:var(--text-2); font-size:1.1rem; font-weight:600; margin-bottom:16px; text-align:center;">HD-EPIC Baseline Comparisons</h3>
     <div class="pills">
       <button class="active" onclick="switchVideo('gimo', this)">vs. GIMO</button>
       <button onclick="switchVideo('chois', this)">vs. CHOIS</button>
       <button onclick="switchVideo('egoscaler', this)">vs. EgoScaler</button>
       <button onclick="switchVideo('gt', this)">vs. Ground Truth</button>
-      <button onclick="switchVideo('all', this)">All Baselines</button>
-      <button onclick="switchVideo('flow_vs_diff', this)">Flow vs. Diffusion</button>
     </div>
     <div class="video-frame">
       <video id="galleryVideo" autoplay loop muted playsinline>
@@ -569,10 +569,42 @@
     </div>
     <p class="result-figure-caption"><b>HD-EPIC.</b> EgoFlow reaches the target via natural, collision-free paths.</p>
 
+    <!-- 2. HOT3D zero-shot -->
+    <h3 style="color:var(--text-2); font-size:1.1rem; font-weight:600; margin-top:48px; margin-bottom:16px; text-align:center;">HOT3D Zero-Shot Generalization</h3>
     <div class="result-figure">
       <img src="static/images/hot3d_qualitative.png" alt="HOT3D qualitative">
     </div>
     <p class="result-figure-caption"><b>HOT3D (zero-shot).</b> Trained on Ego-Exo4D, tested on unseen HOT3D scenes without fine-tuning.</p>
+
+    <!-- 3. Flow matching vs diffusion -->
+    <h3 style="color:var(--text-2); font-size:1.1rem; font-weight:600; margin-top:48px; margin-bottom:16px; text-align:center;">Flow Matching vs. Diffusion</h3>
+    <div class="video-frame">
+      <video autoplay loop muted playsinline>
+        <source src="static/videos/diffusion_flow_qualitative.mp4" type="video/mp4">
+      </video>
+    </div>
+    <p class="video-caption">Flow matching produces smoother, more coherent trajectories than diffusion-based generation.</p>
+
+    <!-- 4. Data processing -->
+    <h3 style="color:var(--text-2); font-size:1.1rem; font-weight:600; margin-top:48px; margin-bottom:16px; text-align:center;">HD-EPIC Data Reconstruction</h3>
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+      <div>
+        <div class="video-frame">
+          <video autoplay loop muted playsinline>
+            <source src="static/videos/data_processing_pan.mp4" type="video/mp4">
+          </video>
+        </div>
+        <p class="video-caption">Pan trajectory reconstruction</p>
+      </div>
+      <div>
+        <div class="video-frame">
+          <video autoplay loop muted playsinline>
+            <source src="static/videos/data_processing_chopping_board.mp4" type="video/mp4">
+          </video>
+        </div>
+        <p class="video-caption">Chopping board trajectory</p>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -640,8 +672,6 @@ const videoMap = {
   'chois': { src: 'static/videos/chois_vs_egoflow.mp4', caption: 'CHOIS (left) vs. EgoFlow (right). CHOIS deviates from the natural path and accumulates errors.' },
   'egoscaler': { src: 'static/videos/egoscaler_vs_egoflow.mp4', caption: 'EgoScaler (left) vs. EgoFlow (right). EgoScaler produces inaccurate trajectories with higher collision rates.' },
   'gt': { src: 'static/videos/egoflow_vs_gt.mp4', caption: 'EgoFlow (left) vs. Ground Truth (right). Our predictions closely match the reference trajectory.' },
-  'all': { src: 'static/videos/hdepic_qualitative.mp4', caption: 'All baselines side by side: GIMO | CHOIS | EgoScaler | EgoFlow | Ground Truth.' },
-  'flow_vs_diff': { src: 'static/videos/diffusion_flow_qualitative.mp4', caption: 'Flow matching produces smoother, more coherent trajectories than diffusion-based generation.' },
 };
 
 function switchVideo(key, btn) {
