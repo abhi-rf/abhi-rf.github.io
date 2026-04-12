@@ -548,18 +548,20 @@
   <div class="container">
     <h2><span class="gradient">Qualitative Results</span></h2>
     <div class="pills">
-      <button class="active" onclick="switchVideo('hdepic', this)">HD-EPIC Comparison</button>
+      <button class="active" onclick="switchVideo('gimo', this)">vs. GIMO</button>
+      <button onclick="switchVideo('chois', this)">vs. CHOIS</button>
+      <button onclick="switchVideo('egoscaler', this)">vs. EgoScaler</button>
+      <button onclick="switchVideo('gt', this)">vs. Ground Truth</button>
+      <button onclick="switchVideo('all', this)">All Baselines</button>
       <button onclick="switchVideo('flow_vs_diff', this)">Flow vs. Diffusion</button>
-      <button onclick="switchVideo('data_pan', this)">Data: Pan Tracking</button>
-      <button onclick="switchVideo('data_board', this)">Data: Chopping Board</button>
     </div>
     <div class="video-frame">
       <video id="galleryVideo" autoplay loop muted playsinline>
-        <source src="static/videos/hdepic_qualitative.mp4" type="video/mp4">
+        <source src="static/videos/gimo_vs_egoflow.mp4" type="video/mp4">
       </video>
     </div>
     <p class="video-caption" id="galleryCaption">
-      Comparison against baselines on HD-EPIC kitchen scenes. Green: observed history. EgoFlow generates smooth, collision-free paths.
+      GIMO (left) vs. EgoFlow (right). GIMO fails to reach the target due to missing gaze information.
     </p>
 
     <div class="result-figure">
@@ -634,10 +636,12 @@
 
 <script>
 const videoMap = {
-  'hdepic': { src: 'static/videos/hdepic_qualitative.mp4', caption: 'Comparison against baselines on HD-EPIC kitchen scenes. Green: observed history. EgoFlow generates smooth, collision-free paths.' },
+  'gimo': { src: 'static/videos/gimo_vs_egoflow.mp4', caption: 'GIMO (left) vs. EgoFlow (right). GIMO fails to reach the target due to missing gaze information.' },
+  'chois': { src: 'static/videos/chois_vs_egoflow.mp4', caption: 'CHOIS (left) vs. EgoFlow (right). CHOIS deviates from the natural path and accumulates errors.' },
+  'egoscaler': { src: 'static/videos/egoscaler_vs_egoflow.mp4', caption: 'EgoScaler (left) vs. EgoFlow (right). EgoScaler produces inaccurate trajectories with higher collision rates.' },
+  'gt': { src: 'static/videos/egoflow_vs_gt.mp4', caption: 'EgoFlow (left) vs. Ground Truth (right). Our predictions closely match the reference trajectory.' },
+  'all': { src: 'static/videos/hdepic_qualitative.mp4', caption: 'All baselines side by side: GIMO | CHOIS | EgoScaler | EgoFlow | Ground Truth.' },
   'flow_vs_diff': { src: 'static/videos/diffusion_flow_qualitative.mp4', caption: 'Flow matching produces smoother, more coherent trajectories than diffusion-based generation.' },
-  'data_pan': { src: 'static/videos/data_processing_pan.mp4', caption: 'Reconstructed 3D pan trajectory projected onto egocentric frames. Hand tracking as rigid-body proxy.' },
-  'data_board': { src: 'static/videos/data_processing_chopping_board.mp4', caption: 'Chopping board trajectory reconstruction from HD-EPIC using Project Aria MPS hand tracking.' },
 };
 
 function switchVideo(key, btn) {
