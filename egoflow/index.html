@@ -595,7 +595,7 @@
     </div>
     <p class="video-caption">Flow matching produces smoother, more coherent trajectories than diffusion-based generation.</p>
 
-    <!-- 4. Data processing -->
+    <!-- 4. HD-EPIC Data processing -->
     <h3 style="color:var(--text-2); font-size:1.1rem; font-weight:600; margin-top:48px; margin-bottom:16px; text-align:center;">HD-EPIC Data Reconstruction</h3>
     <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
       <div>
@@ -613,6 +613,28 @@
           </video>
         </div>
         <p class="video-caption">Chopping board trajectory</p>
+      </div>
+    </div>
+
+    <!-- 5. ADT Data processing verification -->
+    <h3 style="color:var(--text-2); font-size:1.1rem; font-weight:600; margin-top:48px; margin-bottom:16px; text-align:center;">ADT Data Reconstruction Verification</h3>
+    <p style="text-align:center; color:var(--text-3); font-size:0.9rem; margin-bottom:16px;">We validate our trajectory reconstruction algorithm on Aria Digital Twin, which has dense ground-truth annotations.</p>
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+      <div>
+        <div class="video-frame">
+          <video autoplay loop muted playsinline>
+            <source src="static/videos/adt_greenapple.mp4" type="video/mp4">
+          </video>
+        </div>
+        <p class="video-caption">Green apple tracking (ADT)</p>
+      </div>
+      <div>
+        <div class="video-frame">
+          <video autoplay loop muted playsinline>
+            <source src="static/videos/adt_book.mp4" type="video/mp4">
+          </video>
+        </div>
+        <p class="video-caption">Book tracking (ADT)</p>
       </div>
     </div>
   </div>
