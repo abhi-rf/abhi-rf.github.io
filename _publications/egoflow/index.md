@@ -34,9 +34,9 @@ links:
     - name: Project Page
       link: /egoflow/
     - name: Paper
-      link: "#"
-    # - name: Code
-    #   link: "#"
+      link: https://arxiv.org/abs/2604.01421
+    - name: Code
+      link: https://github.com/abhi-rf/egoflow
 
 citation: '@inproceedings{saroha2026egoflow,
   title     = {EgoFlow: Gradient-Guided Flow Matching for Egocentric 6DoF Object Motion Generation},
