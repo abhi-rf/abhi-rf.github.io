@@ -8,7 +8,30 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <style>
+    /* Light mode (default) */
     :root {
+      --bg: #f5f7fa;
+      --bg-2: #eef1f6;
+      --surface: rgba(0,0,0,0.03);
+      --surface-2: rgba(0,0,0,0.05);
+      --border: rgba(0,0,0,0.08);
+      --border-2: rgba(0,0,0,0.14);
+      --text: #1a1a2e;
+      --text-2: #3a3f4b;
+      --text-3: #6b7280;
+      --accent-1: #0e8a7d;
+      --accent-2: #1a8fb5;
+      --accent-3: #3b6de0;
+      --accent-grad: linear-gradient(135deg, #0e8a7d 0%, #1a8fb5 50%, #3b6de0 100%);
+      --accent-grad-soft: linear-gradient(135deg, rgba(14,138,125,0.10), rgba(59,109,224,0.10));
+      --glow-1: rgba(14,138,125,0.06);
+      --glow-2: rgba(59,109,224,0.05);
+      --fig-bg: white;
+      --fig-shadow: rgba(0,0,0,0.08);
+    }
+
+    /* Dark mode */
+    [data-theme="dark"] {
       --bg: #141e33;
       --bg-2: #182640;
       --surface: rgba(255,255,255,0.04);
@@ -23,6 +46,10 @@
       --accent-3: #5a8aff;
       --accent-grad: linear-gradient(135deg, #4ecdc4 0%, #45b7d1 50%, #5a8aff 100%);
       --accent-grad-soft: linear-gradient(135deg, rgba(78,205,196,0.18), rgba(90,138,255,0.18));
+      --glow-1: rgba(78,205,196,0.08);
+      --glow-2: rgba(90,138,255,0.07);
+      --fig-bg: white;
+      --fig-shadow: rgba(0,0,0,0.3);
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -46,7 +73,7 @@
       left: -10%;
       width: 70%;
       height: 70%;
-      background: radial-gradient(ellipse, rgba(78,205,196,0.08) 0%, transparent 60%);
+      background: radial-gradient(ellipse, var(--glow-1, rgba(14,138,125,0.06)) 0%, transparent 60%);
       pointer-events: none;
       z-index: 0;
     }
@@ -57,7 +84,7 @@
       right: -10%;
       width: 70%;
       height: 70%;
-      background: radial-gradient(ellipse, rgba(90,138,255,0.07) 0%, transparent 60%);
+      background: radial-gradient(ellipse, var(--glow-2, rgba(59,109,224,0.05)) 0%, transparent 60%);
       pointer-events: none;
       z-index: 0;
     }
@@ -169,7 +196,7 @@
       border-radius: 16px;
       overflow: hidden;
       border: 1px solid var(--border);
-      box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+      box-shadow: 0 20px 60px var(--fig-shadow, rgba(0,0,0,0.08));
     }
     .teaser-image img {
       display: block;
@@ -267,11 +294,11 @@
 
     /* ===== METHOD ===== */
     .method-figure {
-      background: white;
+      background: var(--fig-bg, white);
       border-radius: 14px;
       padding: 8px;
       border: 1px solid var(--border);
-      box-shadow: 0 12px 40px rgba(0,0,0,0.3);
+      box-shadow: 0 12px 40px var(--fig-shadow, rgba(0,0,0,0.08));
     }
     .method-figure img {
       display: block;
@@ -325,7 +352,7 @@
       border-radius: 16px;
       overflow: hidden;
       border: 1px solid var(--border);
-      box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+      box-shadow: 0 20px 60px var(--fig-shadow, rgba(0,0,0,0.08));
       background: #000;
     }
     .video-frame video {
@@ -342,11 +369,11 @@
 
     /* ===== STATIC RESULTS ===== */
     .result-figure {
-      background: white;
+      background: var(--fig-bg, white);
       border-radius: 12px;
       padding: 6px;
       border: 1px solid var(--border);
-      box-shadow: 0 12px 40px rgba(0,0,0,0.3);
+      box-shadow: 0 12px 40px var(--fig-shadow, rgba(0,0,0,0.08));
       margin-top: 32px;
     }
     .result-figure img {
@@ -469,6 +496,33 @@
     }
 
     /* ===== RESPONSIVE ===== */
+    /* Theme toggle */
+    .theme-toggle {
+      position: fixed;
+      top: 18px;
+      right: 18px;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      background: var(--surface);
+      border: 1px solid var(--border-2);
+      border-radius: 100px;
+      cursor: pointer;
+      backdrop-filter: blur(10px);
+      transition: all 0.3s;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 500;
+      color: var(--text-3);
+    }
+    .theme-toggle:hover {
+      background: var(--surface-2);
+      color: var(--text);
+    }
+    .theme-toggle i { font-size: 0.9rem; }
+
     @media (max-width: 768px) {
       .hero { padding: 48px 0 24px; }
       .hero h1 { font-size: 1.8rem; }
@@ -481,6 +535,10 @@
   </style>
 </head>
 <body>
+
+<button class="theme-toggle" onclick="toggleTheme()" id="themeToggle">
+  <i class="fas fa-moon"></i> Dark
+</button>
 
 <!-- ===== HERO ===== -->
 <header class="hero">
@@ -734,6 +792,29 @@ function switchImage(key, btn) {
   btn.closest('.pills').querySelectorAll('button').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
 }
+
+function toggleTheme() {
+  const html = document.documentElement;
+  const btn = document.getElementById('themeToggle');
+  if (html.getAttribute('data-theme') === 'dark') {
+    html.removeAttribute('data-theme');
+    btn.innerHTML = '<i class="fas fa-moon"></i> Dark';
+    localStorage.setItem('theme', 'light');
+  } else {
+    html.setAttribute('data-theme', 'dark');
+    btn.innerHTML = '<i class="fas fa-sun"></i> Light';
+    localStorage.setItem('theme', 'dark');
+  }
+}
+
+// Restore saved preference
+(function() {
+  const saved = localStorage.getItem('theme');
+  if (saved === 'dark') {
+    document.documentElement.setAttribute('data-theme', 'dark');
+    document.getElementById('themeToggle').innerHTML = '<i class="fas fa-sun"></i> Light';
+  }
+})();
 
 function copyBibtex() {
   const text = document.querySelector('.bibtex-box').textContent.trim();
